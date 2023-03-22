@@ -64,7 +64,15 @@ def install_file(input_apk, output_excel):
     pid = p.pid
     print("subprocess pid: " + str(pid))
     install_start = int(time.time())
-    check_timer = Timer(delay_check_time, check_dead_process, args=[input_apk, output_excel, install_start, pid])
+    stats = os.stat(input_apk)
+    file_size_in_mb = 1.0 * stats.st_size / 1000000
+    # delay_check_time决定这个时间的比例, 比如100的时候, 90M的文件超时时间是9s
+    the_file_over_time = int(file_size_in_mb * delay_check_time / 100 * 1 / 10)
+    if the_file_over_time == 0:
+        the_file_over_time = 10
+    print("file_size_in_mb: " + str(file_size_in_mb))
+    print("the_file_over_time: " + str(the_file_over_time))
+    check_timer = Timer(the_file_over_time, check_dead_process, args=[input_apk, output_excel, install_start, pid])
     check_timer.start()
     install_start = int(time.time())
     print("正在安装, 将打印安装输出, 安装错误, 安装返回值")
@@ -82,7 +90,7 @@ def install_file(input_apk, output_excel):
     install_duration = install_end - install_start
     print("install_file 消耗安装时间: " + str(install_duration))
     is_canceled = False
-    if install_duration >= delay_check_time:
+    if install_duration >= the_file_over_time:
         if p.returncode == signal.CTRL_BREAK_EVENT:
             is_canceled = True
     fail_copy = os.path.join(current_path, android_fail, file_name)
@@ -111,14 +119,13 @@ def print_red(str2):
 def check_dead_process(input_apk, output_excel, install_start, pid):
     print("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
     print("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
-    global delay_check_time
-    print("当前文件安装被阻塞: " + str(delay_check_time) + "秒")
     install_end = int(time.time())
     install_duration = install_end - install_start
     print("input_apk       : " + str(input_apk))
     print("install_start   : " + str(install_start))
     print("install_duration: " + str(install_duration))
     print("killing process : " + str(pid))
+    print("当前文件安装被阻塞: " + str(install_duration) + "秒")
     # os.kill(pid, signal.CTRL_BREAK_EVENT)
     Popen("TASKKILL /F /PID {pid} /T".format(pid=pid))
     print("已经杀死当前安装进程")
@@ -129,8 +136,7 @@ def check_dead_process(input_apk, output_excel, install_start, pid):
 def retry_install(input_apk, output_excel):
     is_canceled = install_file(input_apk, output_excel)
     while is_canceled:
-        global delay_check_time
-        print("retry_install 安装失败, 但是花费时间: " + str(delay_check_time))
+        print("retry_install 安装失败")
         delay_retry = 10
         print_red("retry_install 延迟" + str(delay_retry) + "秒重试")
         time.sleep(delay_retry)
@@ -163,7 +169,7 @@ def install_folder(folder, output_excel):
 
 def set_delay_check_time_config(current_path):
     global delay_check_time
-    delay_check_time_file = current_path + "/config/一个安装超时时间.txt"
+    delay_check_time_file = current_path + "/config/一个安装超时百分比系数.txt"
     if os.path.isfile(delay_check_time_file):
         file_object = open(delay_check_time_file, 'r')  # 创建一个文件对象，也是一个可迭代对象
         try:
