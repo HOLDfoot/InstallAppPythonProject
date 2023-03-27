@@ -68,7 +68,7 @@ def find_myt_package(current_path):
     myt_packages = []
     for i in range(app_installed_num):
         one_package_name = splits[i][8:]
-        prefix = "com.myt."
+        prefix = "com."
         if one_package_name.lower().startswith(prefix):
             myt_packages.append(one_package_name)
     print("myt_packages: " + str(myt_packages))
