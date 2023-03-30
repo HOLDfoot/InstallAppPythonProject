@@ -1,13 +1,8 @@
-/原始安卓包/*
-/安装失败文件
-/安装成功文件
-/*.xls
+/原始安卓包/*.apk
+/安装失败文件/*.apk
+/安装记录/*.xls
 /.idea
 /__pycache__
-config/是否替换安装配置文件.txt
-python_exe_path.txt
-安装记录
 config/log.txt
-config
 .git.zip
-test
+/test
