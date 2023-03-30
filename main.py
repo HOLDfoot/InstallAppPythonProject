@@ -162,9 +162,10 @@ def install_folder(folder, output_excel):
         file_list = files
         break
     for one_file in file_list:
-        input_apk = os.path.join(folder, one_file)
-        # install_file_with_check(input_apk, output_excel)
-        retry_install(input_apk, output_excel)
+        if str(one_file).endswith(".apk"):
+            input_apk = os.path.join(folder, one_file)
+            # install_file_with_check(input_apk, output_excel)
+            retry_install(input_apk, output_excel)
 
 
 def set_delay_check_time_config(current_path):
