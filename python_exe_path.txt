@@ -1,1 +1,1 @@
-C:\Users\nuc\AppData\Local\Programs\Python\Python310\python.exe 
+C:\Users\Administrator\AppData\Local\Programs\Python\Python310\python.exe 

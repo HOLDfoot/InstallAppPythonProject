@@ -68,8 +68,8 @@ def install_file(input_apk, output_excel):
     file_size_in_mb = 1.0 * stats.st_size / 1000000
     # delay_check_time决定这个时间的比例, 比如100的时候, 90M的文件超时时间是9s
     the_file_over_time = int(file_size_in_mb * delay_check_time / 100 * 1 / 10)
-    if the_file_over_time <= 20:
-        the_file_over_time = 20
+    if the_file_over_time <= 30:
+        the_file_over_time = 30
     print("file_size_in_mb: " + str(file_size_in_mb))
     print("the_file_over_time: " + str(the_file_over_time))
     check_timer = Timer(the_file_over_time, check_dead_process, args=[input_apk, output_excel, install_start, pid])
