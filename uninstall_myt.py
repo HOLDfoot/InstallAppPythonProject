@@ -3,6 +3,7 @@ import datetime
 import os
 import sys
 import subprocess
+import file_string_util
 
 # 当前运行的路径
 current_path = os.getcwd()
@@ -65,10 +66,10 @@ def find_package():
     print("app_installed_num: " + str(app_installed_num))
     for i in range(app_installed_num):
         one_package_name = splits[i][8:]
-        prefix = "com.myt."
+        prefix = file_string_util.get_spec_package_prefix(current_path)
         global uninstall_myt_type
         if uninstall_myt_type == 1:
-            prefix = "com.myt.game"
+            prefix = prefix + "game"
         if one_package_name.lower().startswith(prefix):
             uninstall_package(one_package_name)
 

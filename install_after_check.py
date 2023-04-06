@@ -1,6 +1,7 @@
 # encoding:utf-8
 import os
 import subprocess
+import file_string_util
 
 def get_package_by_apk(apk_path, current_path):
     aapt_path = os.path.join(current_path, "aapt2.exe")
@@ -68,7 +69,7 @@ def find_myt_package(current_path):
     myt_packages = []
     for i in range(app_installed_num):
         one_package_name = splits[i][8:]
-        prefix = "com.myt."
+        prefix = file_string_util.get_spec_package_prefix(current_path)
         if one_package_name.lower().startswith(prefix):
             myt_packages.append(one_package_name)
     print("myt_packages: " + str(myt_packages))
