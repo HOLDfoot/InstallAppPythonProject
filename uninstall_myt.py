@@ -3,7 +3,7 @@ import datetime
 import os
 import sys
 import subprocess
-import file_string_util
+import util.file_string_util as file_string_util
 
 # 当前运行的路径
 current_path = os.getcwd()

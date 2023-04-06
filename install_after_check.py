@@ -1,7 +1,7 @@
 # encoding:utf-8
 import os
 import subprocess
-import file_string_util
+import util.file_string_util as file_string_util
 
 def get_package_by_apk(apk_path, current_path):
     aapt_path = os.path.join(current_path, "aapt2.exe")
