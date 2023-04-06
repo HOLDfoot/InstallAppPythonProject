@@ -3,11 +3,11 @@
 chcp 65001
 
 @echo off
-title 卸载所有MYT应用
+title 卸载所有指定游戏
 
 @echo 链接板子开始卸载
-for /f "delims=" %%i in (pythonExePath.txt) do (
-echo 调用脚本命令执行: %%i uninstallMyt.py 1
-start %%i uninstallMyt.py 1
+for /f "delims=" %%i in (python_exe_path.txt) do (
+echo 调用脚本命令执行: %%i uninstall_myt.py 1
+start %%i uninstall_myt.py 1
 )
 pause

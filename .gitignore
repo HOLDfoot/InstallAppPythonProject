@@ -6,3 +6,5 @@
 config/log.txt
 .git.zip
 /test
+util/__pycache__
+__pycache__

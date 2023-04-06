@@ -67,9 +67,9 @@ def find_myt_package(current_path):
     # print("splits: " + str(splits))
     print("app_installed_num: " + str(app_installed_num))
     myt_packages = []
+    prefix = file_string_util.get_spec_package_prefix(current_path)
     for i in range(app_installed_num):
         one_package_name = splits[i][8:]
-        prefix = file_string_util.get_spec_package_prefix(current_path)
         if one_package_name.lower().startswith(prefix):
             myt_packages.append(one_package_name)
     print("myt_packages: " + str(myt_packages))

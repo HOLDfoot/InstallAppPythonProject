@@ -64,12 +64,12 @@ def find_package():
     app_installed_num = splits_len - 1
     # print("splits: " + str(splits))
     print("app_installed_num: " + str(app_installed_num))
+    prefix = file_string_util.get_spec_package_prefix(current_path)
+    global uninstall_myt_type
+    if uninstall_myt_type == 1:
+        prefix = prefix + "game"
     for i in range(app_installed_num):
         one_package_name = splits[i][8:]
-        prefix = file_string_util.get_spec_package_prefix(current_path)
-        global uninstall_myt_type
-        if uninstall_myt_type == 1:
-            prefix = prefix + "game"
         if one_package_name.lower().startswith(prefix):
             uninstall_package(one_package_name)
 
