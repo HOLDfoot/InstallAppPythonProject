@@ -7,7 +7,7 @@ current_path = os.getcwd()
 
 if __name__ == '__main__':
     adb_path = os.path.join(current_path, "adb.exe")
-    exec_command = adb_path + " shell dumpsys window windows"
+    exec_command = adb_path + " shell dumpsys window"
     # print("exec_command: " + exec_command)
     p = subprocess.Popen(exec_command, shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     pid = p.pid
@@ -23,7 +23,7 @@ if __name__ == '__main__':
         # print("len: " + str(len(out_message_lines_array)))
         for line in out_message_lines_array:
             # print(line)
-            if line.__contains__("mFocusedApp"):
+            if line.__contains__("mCurrentFocus"):
                 print(line)
                 print("解析出包名: ")
                 splits = line.split("/")[0].split(" ")
